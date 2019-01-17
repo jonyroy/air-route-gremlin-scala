@@ -1,0 +1,7 @@
+[0m[[0m[31merror[0m] [0m[0m/home/roy/Desktop/air-route-gremlin-scala/src/main/scala/org.roy/Main.scala:7:20: not found: type JanusGraph[0m
+[0m[[0m[31merror[0m] [0m[0m        val graph: JanusGraph = JanusGraphFactory.build.[0m
+[0m[[0m[31merror[0m] [0m[0m                   ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/roy/Desktop/air-route-gremlin-scala/src/main/scala/org.roy/Main.scala:7:33: not found: value JanusGraphFactory[0m
+[0m[[0m[31merror[0m] [0m[0m        val graph: JanusGraph = JanusGraphFactory.build.[0m
+[0m[[0m[31merror[0m] [0m[0m                                ^[0m
+[0m[[0m[31merror[0m] [0m[0mtwo errors found[0m
