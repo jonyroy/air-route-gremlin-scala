@@ -8,6 +8,9 @@ ThisBuild / organizationName := "roy"
 lazy val root = (project in file("."))
   .settings(
     name := "air-route-gremlin-scala",
+
+    mainClass in (Compile, run) := Some("org.roy.Main"),
+
     libraryDependencies += scalaTest % Test,
 
     libraryDependencies += "org.janusgraph" % "janusgraph-core" % "0.3.1",
