@@ -1,8 +1,10 @@
 package org.roy.janus.conn.manager
 
-
+import gremlin.scala._
 import org.janusgraph.core.{JanusGraphFactory, JanusGraph}
 import org.roy.utils.CheckArgs
+
+import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource
 
 object JanusConnManager {
 
@@ -23,11 +25,20 @@ object JanusConnManager {
          
     }
 
+    def getScalaGraphInstance(graph: JanusGraph): ScalaGraph = {
+        val scalaGraph: ScalaGraph = graph.asScala
+        scalaGraph
+    }
+
+
     def isGraphOpen(graph: JanusGraph): Boolean = {
        if(CheckArgs(graph) && graph.isOpen()) true else false
     }
 
+
+
     def killJanusInstance(graph: JanusGraph): Boolean = {
+        
         try {
             if(CheckArgs(graph) && graph.isOpen()){
                 graph.close()
@@ -37,6 +48,38 @@ object JanusConnManager {
             }
         } catch {
             case e: Exception => false
+        }
+    }
+
+
+
+    def commitJanusGraphTx(graph: JanusGraph): Boolean = {
+        try {
+            if(CheckArgs(graph) && graph.isOpen()){
+                graph.tx().commit()
+                true
+            } else {
+                false
+            }
+        } catch {
+            case e: Exception => 
+            graph.tx().rollback()
+            false
+        }
+    }
+
+
+
+    def getGraphTraversal(graph: JanusGraph): GraphTraversalSource = {
+        
+        try {
+            if(CheckArgs(graph) && graph.isOpen()){
+                graph.traversal()
+            } else {
+                null
+            }
+        } catch {
+            case e: Exception => null
         }
     }
 }
