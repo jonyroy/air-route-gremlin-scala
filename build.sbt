@@ -1,4 +1,5 @@
 import Dependencies._
+//import com.typesafe.sbt.SbtNativePackager.autoImport.NativePackagerHelper._
 
 ThisBuild / scalaVersion     := "2.12.8"
 ThisBuild / version          := "0.1.0"
@@ -17,7 +18,24 @@ lazy val root = (project in file("."))
 
     libraryDependencies += "org.janusgraph" % "janusgraph-cql" % "0.3.1",
 
-    libraryDependencies += "com.michaelpollmeier" %% "gremlin-scala" % "3.3.4.1"
+    libraryDependencies += "com.michaelpollmeier" %% "gremlin-scala" % "3.3.4.1",
+
+    libraryDependencies += "org.slf4j" % "slf4j-api" % "1.7.25",
+
+    libraryDependencies += "org.slf4j" % "slf4j-log4j12" % "1.7.25" % Test,
+
+
+    libraryDependencies += "org.slf4j" % "slf4j-simple" % "1.7.25" % Test,
+
+
+
+    libraryDependencies += "com.typesafe.scala-logging" %% "scala-logging" % "3.9.0",
+    libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.2.3" % Test
+
+
+   // mappings in Universal ++= directory("src/main/resources")
+
+    //enablePlugins(JavaAppPackaging)
 
   )
 
