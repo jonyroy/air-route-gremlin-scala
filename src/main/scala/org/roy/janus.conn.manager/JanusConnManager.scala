@@ -36,7 +36,6 @@ object JanusConnManager {
     }
 
 
-
     def killJanusInstance(graph: JanusGraph): Boolean = {
         
         try {
