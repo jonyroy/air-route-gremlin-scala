@@ -1,4 +1,4 @@
-<!-- <?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
@@ -9,16 +9,13 @@
 		</layout>
 	</appender>
 
-	<logger name="com.mkyong.web" level="debug"
-		additivity="false">
-		<appender-ref ref="STDOUT" />
-	</logger>
+
 
 	<root level="info">
 		<appender-ref ref="STDOUT" />
 	</root>
 
-    <root level="error">
+    <root level="debug">
 		<appender-ref ref="STDOUT" />
 	</root>
 
@@ -26,42 +23,4 @@
 		<appender-ref ref="STDOUT" />
 	</root>
 
-</configuration> -->
-
-
-<configuration>
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
-            <pattern>%d{HH:mm:ss:SSS} [%thread] %-5level  - %msg%n</pattern>
-        </encoder>
-    </appender>
-
-    <!--<appender name="FILE" class="ch.qos.logback.core.FileAppender">-->
-    <!--&lt;!&ndash; path to your log file, where you want to store logs &ndash;&gt;-->
-    <!--<file>/Users/yourusername/test.log</file>-->
-    <!--<append>false</append>-->
-    <!--<encoder>-->
-    <!--<pattern>%d{HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>-->
-    <!--</encoder>-->
-    <!--</appender>-->
-
-    <!--<root level="debug">-->
-    <!--<appender-ref ref="STDOUT" />-->
-    <!--<appender-ref ref="FILE" />-->
-    <!--</root>-->
-
-    <root level="info">
-        <appender-ref ref="STDOUT" />
-        <!--<appender-ref ref="FILE" />-->
-    </root>
-
-    <!--<root level="error">-->
-        <!--<appender-ref ref="STDOUT" />-->
-        <!--&lt;!&ndash;<appender-ref ref="FILE" />&ndash;&gt;-->
-    <!--</root>-->
-
-    <!--<root level="warn">-->
-        <!--<appender-ref ref="STDOUT" />-->
-        <!--&lt;!&ndash;<appender-ref ref="FILE" />&ndash;&gt;-->
-    <!--</root>-->
 </configuration>

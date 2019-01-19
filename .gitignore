@@ -5,3 +5,4 @@
 /.idea
 /project/target
 /.ensime_cache
+/out

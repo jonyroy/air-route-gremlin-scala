@@ -1,16 +1,16 @@
 import Dependencies._
 //import com.typesafe.sbt.SbtNativePackager.autoImport.NativePackagerHelper._
 
-ThisBuild / scalaVersion     := "2.12.8"
-ThisBuild / version          := "0.1.0"
-ThisBuild / organization     := "org.roy"
+ThisBuild / scalaVersion := "2.12.8"
+ThisBuild / version := "0.1.0"
+ThisBuild / organization := "org.roy"
 ThisBuild / organizationName := "roy"
 
 lazy val root = (project in file("."))
   .settings(
     name := "air-route-gremlin-scala",
 
-    mainClass in (Compile, run) := Some("org.roy.Main"),
+    mainClass in(Compile, run) := Some("org.roy.Main"),
 
     libraryDependencies += scalaTest % Test,
 
@@ -27,13 +27,13 @@ lazy val root = (project in file("."))
 
     libraryDependencies += "org.slf4j" % "slf4j-simple" % "1.7.25" % Test,
 
-
-
     libraryDependencies += "com.typesafe.scala-logging" %% "scala-logging" % "3.9.0",
     libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.2.3" % Test
 
 
-   // mappings in Universal ++= directory("src/main/resources")
+
+
+    // mappings in Universal ++= directory("src/main/resources")
 
     //enablePlugins(JavaAppPackaging)
 
