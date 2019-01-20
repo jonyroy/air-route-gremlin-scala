@@ -4,7 +4,7 @@ import gremlin.scala._
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource
 import org.apache.tinkerpop.gremlin.tinkergraph.structure.TinkerGraph
 import org.janusgraph.core.{JanusGraph, JanusGraphFactory}
-import org.roy.utils.CheckArgs
+import org.roy.utils.IsNotNull
 
 object JanusConnManager {
 
@@ -42,14 +42,14 @@ object JanusConnManager {
 
 
   def isGraphOpen(graph: JanusGraph): Boolean = {
-    if (CheckArgs(graph) && graph.isOpen) true else false
+    if (IsNotNull(graph) && graph.isOpen) true else false
   }
 
 
   def killJanusInstance(graph: JanusGraph): Boolean = {
 
     try {
-      if (CheckArgs(graph) && graph.isOpen) {
+      if (IsNotNull(graph) && graph.isOpen) {
         graph.close()
         true
       } else {
@@ -63,7 +63,7 @@ object JanusConnManager {
 
   def commitJanusGraphTx(graph: JanusGraph): Boolean = {
     try {
-      if (CheckArgs(graph) && graph.isOpen) {
+      if (IsNotNull(graph) && graph.isOpen) {
         graph.tx().commit()
         true
       } else {
@@ -80,7 +80,7 @@ object JanusConnManager {
   def commitScalaGraphTx(sGraph: ScalaGraph): Boolean = {
 
     try {
-      if (CheckArgs(sGraph) && sGraph.tx().isOpen)
+      if (IsNotNull(sGraph) && sGraph.tx().isOpen)
         sGraph.tx().commit()
       true
     } catch {
@@ -94,7 +94,7 @@ object JanusConnManager {
   def getGraphTraversal(graph: JanusGraph): GraphTraversalSource = {
 
     try {
-      if (CheckArgs(graph) && graph.isOpen) {
+      if (IsNotNull(graph) && graph.isOpen) {
         graph.traversal()
       } else {
         null

@@ -7,6 +7,7 @@ import org.roy.janusgraph.JanusConnManager._
 import org.roy.utils.Utils._
 import org.apache.tinkerpop.gremlin.structure.io
 import org.apache.tinkerpop.gremlin.structure.io.IoCore
+import org.roy.janusgraph.SchemaGenerator
 import org.roy.tinkergraph.TinkerGraphManager
 
 object Main {
@@ -23,6 +24,8 @@ object Main {
 //    }
 //
 //    val scalaGraph: ScalaGraph = getScalaGraphInstance(graph)
+
+    println(SchemaGenerator.PropertyKeyTypes.STRING)
 
     val scalaGraph: ScalaGraph = TinkerGraphManager.initTinkerGraph
 
