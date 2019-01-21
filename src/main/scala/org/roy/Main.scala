@@ -7,8 +7,11 @@ import org.roy.janusgraph.JanusConnManager._
 import org.roy.utils.Utils._
 import org.apache.tinkerpop.gremlin.structure.io
 import org.apache.tinkerpop.gremlin.structure.io.IoCore
+import org.roy.air.route.Query
 import org.roy.janusgraph.SchemaGenerator
 import org.roy.tinkergraph.TinkerGraphManager
+
+import scala.collection.JavaConverters._
 
 object Main {
 
@@ -25,12 +28,19 @@ object Main {
 //
 //    val scalaGraph: ScalaGraph = getScalaGraphInstance(graph)
 
-    println(SchemaGenerator.PropertyKeyTypes.STRING)
 
     val scalaGraph: ScalaGraph = TinkerGraphManager.initTinkerGraph
 
     TinkerGraphManager.loadAirRouteToMemory(scalaGraph)
 
+    val result = Query.getCountryGroupBy(scalaGraph)
+
+    result.foreach(elem => elem.asScala.foreach(elem0 => {
+      val v: Vertex = elem0._1
+
+    }))
+
+    //println(Query.getCountryGroupBy(scalaGraph))
 
 
     val r = getCountryNameByCode(scalaGraph, "AUS")

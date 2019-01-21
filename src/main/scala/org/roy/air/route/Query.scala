@@ -15,4 +15,10 @@ object Query {
 
     graph.V().has(code, countryCode).dedup().value(country).l()
   }
+
+  def getCountryGroupBy(scalaGraph: ScalaGraph) = {
+
+    scalaGraph.V().hasLabel("airport").groupCount().by("country").l()
+  }
+
 }
