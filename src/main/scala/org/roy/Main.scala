@@ -10,6 +10,7 @@ import org.apache.tinkerpop.gremlin.structure.io.IoCore
 import org.roy.air.route.Query
 import org.roy.janusgraph.SchemaGenerator
 import org.roy.tinkergraph.TinkerGraphManager
+import org.roy.utils.IsNotNull
 
 import scala.collection.JavaConverters._
 
@@ -18,7 +19,10 @@ object Main {
 
   def main(arg: Array[String]): Unit = {
 
-//    val graph: JanusGraph = getJanusGraphInstance()
+
+    //SchemaGenerator.genSchema
+
+    val graph: JanusGraph = getJanusGraphInstance()
 //
 //    if (isGraphOpen(graph)) {
 //      println("Hoooree JanusGraph Instance Creation Successful.")
@@ -26,28 +30,37 @@ object Main {
 //      println("Sorry Can't create JanusGraph Instance. Try another time")
 //    }
 //
-//    val scalaGraph: ScalaGraph = getScalaGraphInstance(graph)
+    val scalaGraph: ScalaGraph = getScalaGraphInstance(graph)
 
+    //val pk = graph.getPropertyKey("id")
 
-    val scalaGraph: ScalaGraph = TinkerGraphManager.initTinkerGraph
+    //if(IsNotNull(pk)) println(pk)
 
-    TinkerGraphManager.loadAirRouteToMemory(scalaGraph)
+    println(Query.getNameOfPerson(scalaGraph, 100))
 
-    val result = Query.getCountryGroupBy(scalaGraph)
+    println(Query.getNumberOfVertices(scalaGraph))
 
-    result.foreach(elem => elem.asScala.foreach(elem0 => {
-      val v: Vertex = elem0._1
+    //Query.vertexCreationManager(scalaGraph)
 
-    }))
+   // val scalaGraph: ScalaGraph = TinkerGraphManager.initTinkerGraph
+
+//    TinkerGraphManager.loadAirRouteToMemory(scalaGraph)
+//
+//    val result = Query.getCountryGroupBy(scalaGraph)
+//
+//    result.foreach(elem => elem.asScala.foreach(elem0 => {
+//      val v: Vertex = elem0._1
+//
+//    }))
 
     //println(Query.getCountryGroupBy(scalaGraph))
 
 
-    val r = getCountryNameByCode(scalaGraph, "AUS")
+    //val r = getCountryNameByCode(scalaGraph, "AUS")
     //val r = firstQuery(scalaGraph)
 
     //r.foreach(i => println(getDataType(i)))
-    println(r)
+    //println(r)
     //println(s"Type of Result: ${getDataType(r)}")
 
 
@@ -63,6 +76,6 @@ object Main {
 //    scalaGraph.tx().commit()
 //    scalaGraph.close()
 //    if (isGraphOpen(graph)) println("Open") else println("close")
-//    killJanusInstance(graph)
+    killJanusInstance(graph)
   }
 }

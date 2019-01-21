@@ -3,6 +3,7 @@ package org.roy.janusgraph
 import gremlin.scala._
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource
 import org.apache.tinkerpop.gremlin.tinkergraph.structure.TinkerGraph
+import org.janusgraph.core.schema.JanusGraphManagement
 import org.janusgraph.core.{JanusGraph, JanusGraphFactory}
 import org.roy.utils.IsNotNull
 
@@ -72,6 +73,22 @@ object JanusConnManager {
     } catch {
       case e: Exception =>
         graph.tx().rollback()
+        false
+    }
+  }
+
+
+  def commitMgtTx(mgt: JanusGraphManagement): Boolean = {
+    try{
+      if(IsNotNull(mgt) && mgt.isOpen){
+        mgt.commit()
+        true
+      } else {
+        false
+      }
+    }catch {
+      case e: Exception =>
+        mgt.rollback()
         false
     }
   }

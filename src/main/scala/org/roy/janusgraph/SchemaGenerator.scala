@@ -1,5 +1,6 @@
 package org.roy.janusgraph
 
+import org.apache.tinkerpop.gremlin.structure.Vertex
 import org.janusgraph.core._
 import org.janusgraph.core.schema.JanusGraphManagement
 import org.roy.utils.IsNotNull
@@ -11,19 +12,32 @@ object SchemaGenerator {
 
     val graph: JanusGraph = JanusConnManager.getJanusGraphInstance()
 
+    println(s"Schema Gen Start.")
+
     val mgt: JanusGraphManagement = graph.openManagement()
 
-    val vertexLabel: VertexLabel = mgt.getVertexLabel("")
+    val vertexLabel = createVertexLabel(mgt, "person")
 
+    val idPropertyKeyOption: Option[PropertyKey] = createPropertyKey(mgt, "id", PropertyKeyTypes.INTEGER)
+    val firstNamePropertyKeyOption = createPropertyKey(mgt, "firstName", PropertyKeyTypes.STRING)
+    val lastNamePropertyKeyOption = createPropertyKey(mgt, "lastName", PropertyKeyTypes.STRING)
+    val addressPropertyKeyOption = createPropertyKey(mgt, "address", PropertyKeyTypes.STRING, PropertyCardinality.SET)
+    val mobilePropertyKeyOption = createPropertyKey(mgt, "mobile", PropertyKeyTypes.STRING, PropertyCardinality.SET)
+    val emailPropertyKeyOption = createPropertyKey(mgt, "email", PropertyKeyTypes.STRING, PropertyCardinality.SET)
 
-  }
-
-  private def getJanusManagement(graph: JanusGraph): Option[JanusGraphManagement] = {
-    if (IsNotNull(graph)) {
-      Option(graph.openManagement())
-    } else {
-      None
+    idPropertyKeyOption match {
+      case Some(idPropertyKey) => mgt.buildIndex("id", classOf[Vertex]).addKey(idPropertyKey).buildCompositeIndex()
+      case None =>
     }
+
+    JanusConnManager.commitMgtTx(mgt)
+
+    JanusConnManager.commitJanusGraphTx(graph)
+
+    JanusConnManager.killJanusInstance(graph)
+
+    println(s"Schema Gen Ends")
+
   }
 
   private def createVertexLabel(mgt: JanusGraphManagement, newVertexLabel: String): Option[VertexLabel] = {
@@ -47,35 +61,6 @@ object SchemaGenerator {
       val label: VertexLabel = mgt.getVertexLabel(vertexLabel)
 
       if (IsNotNull(label)) {
-        true
-      } else {
-        false
-      }
-    } else {
-      false
-    }
-
-  }
-
-  private def createEdgeLabel(mgt: JanusGraphManagement, newEdgeLabel: String): Option[EdgeLabel] = {
-    if (IsNotNull(mgt) && isStringNonEmpty(newEdgeLabel)) {
-      if (!isEdgeLabelExist(mgt, newEdgeLabel)) {
-        Option(mgt.makeEdgeLabel(newEdgeLabel).make())
-      } else {
-        None
-      }
-    } else {
-      None
-    }
-  }
-
-  private def isEdgeLabelExist(mgt: JanusGraphManagement, edgeLabel: String): Boolean = {
-
-    if (IsNotNull(mgt) && isStringNonEmpty(edgeLabel)) {
-
-      val eLabel: EdgeLabel = mgt.getEdgeLabel(edgeLabel)
-
-      if (IsNotNull(eLabel)) {
         true
       } else {
         false
@@ -183,6 +168,43 @@ object SchemaGenerator {
     } else {
       false
     }
+  }
+
+  private def getJanusManagement(graph: JanusGraph): Option[JanusGraphManagement] = {
+    if (IsNotNull(graph)) {
+      Option(graph.openManagement())
+    } else {
+      None
+    }
+  }
+
+  private def createEdgeLabel(mgt: JanusGraphManagement, newEdgeLabel: String): Option[EdgeLabel] = {
+    if (IsNotNull(mgt) && isStringNonEmpty(newEdgeLabel)) {
+      if (!isEdgeLabelExist(mgt, newEdgeLabel)) {
+        Option(mgt.makeEdgeLabel(newEdgeLabel).make())
+      } else {
+        None
+      }
+    } else {
+      None
+    }
+  }
+
+  private def isEdgeLabelExist(mgt: JanusGraphManagement, edgeLabel: String): Boolean = {
+
+    if (IsNotNull(mgt) && isStringNonEmpty(edgeLabel)) {
+
+      val eLabel: EdgeLabel = mgt.getEdgeLabel(edgeLabel)
+
+      if (IsNotNull(eLabel)) {
+        true
+      } else {
+        false
+      }
+    } else {
+      false
+    }
+
   }
 
   object PropertyKeyTypes {

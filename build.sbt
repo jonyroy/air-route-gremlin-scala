@@ -28,8 +28,10 @@ lazy val root = (project in file("."))
     libraryDependencies += "org.slf4j" % "slf4j-simple" % "1.7.25" % Test,
 
     libraryDependencies += "com.typesafe.scala-logging" %% "scala-logging" % "3.9.0",
-    libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.2.3" % Test
+    libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.2.3" % Test,
 
+    // https://mvnrepository.com/artifact/joda-time/joda-time
+    libraryDependencies += "joda-time" % "joda-time" % "2.10"
 
 
 
