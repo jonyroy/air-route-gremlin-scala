@@ -8,7 +8,7 @@ import org.roy.utils.Utils._
 
 object SchemaGenerator {
 
-  def genSchema = {
+  def schemaManager = {
 
     val graph: JanusGraph = JanusConnManager.getJanusGraphInstance()
 
@@ -39,6 +39,8 @@ object SchemaGenerator {
     println(s"Schema Gen Ends")
 
   }
+
+
 
   private def createVertexLabel(mgt: JanusGraphManagement, newVertexLabel: String): Option[VertexLabel] = {
 
@@ -75,80 +77,31 @@ object SchemaGenerator {
 
     if (IsNotNull(mgt) && isStringNonEmpty(propertyKey, propertyType) && (!isPropertyExist(mgt, propertyKey))) {
 
-      val pMake = propertyType match {
-        case "string" =>
-          cardinality match {
-            case "single" => mgt.makePropertyKey(propertyKey).dataType(classOf[String]).cardinality(Cardinality.SINGLE).make()
-            case "set" => mgt.makePropertyKey(propertyKey).dataType(classOf[String]).cardinality(Cardinality.SET).make()
-            case "list" => mgt.makePropertyKey(propertyKey).dataType(classOf[String]).cardinality(Cardinality.LIST).make()
-          }
+      val proCardinality = getCardinality(cardinality)
 
-        case "character" =>
-          cardinality match {
-            case "single" => mgt.makePropertyKey(propertyKey).dataType(classOf[Character]).cardinality(Cardinality.SINGLE).make()
-            case "set" => mgt.makePropertyKey(propertyKey).dataType(classOf[Character]).cardinality(Cardinality.SET).make()
-            case "list" => mgt.makePropertyKey(propertyKey).dataType(classOf[Character]).cardinality(Cardinality.LIST).make()
-          }
-        case "boolean" =>
-          cardinality match {
-            case "single" => mgt.makePropertyKey(propertyKey).dataType(classOf[java.lang.Boolean]).cardinality(Cardinality.SINGLE).make()
-            case "set" => mgt.makePropertyKey(propertyKey).dataType(classOf[java.lang.Boolean]).cardinality(Cardinality.SET).make()
-            case "list" => mgt.makePropertyKey(propertyKey).dataType(classOf[java.lang.Boolean]).cardinality(Cardinality.LIST).make()
-          }
-        case "byte" =>
-          cardinality match {
-            case "single" => mgt.makePropertyKey(propertyKey).dataType(classOf[java.lang.Byte]).cardinality(Cardinality.SINGLE).make()
-            case "set" => mgt.makePropertyKey(propertyKey).dataType(classOf[java.lang.Byte]).cardinality(Cardinality.SET).make()
-            case "list" => mgt.makePropertyKey(propertyKey).dataType(classOf[java.lang.Byte]).cardinality(Cardinality.LIST).make()
-          }
-        case "short" =>
-          cardinality match {
-            case "single" => mgt.makePropertyKey(propertyKey).dataType(classOf[java.lang.Short]).cardinality(Cardinality.SINGLE).make()
-            case "set" => mgt.makePropertyKey(propertyKey).dataType(classOf[java.lang.Short]).cardinality(Cardinality.SET).make()
-            case "list" => mgt.makePropertyKey(propertyKey).dataType(classOf[java.lang.Short]).cardinality(Cardinality.LIST).make()
-          }
-        case "integer" =>
-          cardinality match {
-            case "single" => mgt.makePropertyKey(propertyKey).dataType(classOf[java.lang.Integer]).cardinality(Cardinality.SINGLE).make()
-            case "set" => mgt.makePropertyKey(propertyKey).dataType(classOf[java.lang.Integer]).cardinality(Cardinality.SET).make()
-            case "list" => mgt.makePropertyKey(propertyKey).dataType(classOf[java.lang.Integer]).cardinality(Cardinality.LIST).make()
-          }
-        case "long" =>
-          cardinality match {
-            case "single" => mgt.makePropertyKey(propertyKey).dataType(classOf[java.lang.Long]).cardinality(Cardinality.SINGLE).make()
-            case "set" => mgt.makePropertyKey(propertyKey).dataType(classOf[java.lang.Long]).cardinality(Cardinality.SET).make()
-            case "list" => mgt.makePropertyKey(propertyKey).dataType(classOf[java.lang.Long]).cardinality(Cardinality.LIST).make()
-          }
-        case "float" =>
-          cardinality match {
-            case "single" => mgt.makePropertyKey(propertyKey).dataType(classOf[java.lang.Float]).cardinality(Cardinality.SINGLE).make()
-            case "set" => mgt.makePropertyKey(propertyKey).dataType(classOf[java.lang.Float]).cardinality(Cardinality.SET).make()
-            case "list" => mgt.makePropertyKey(propertyKey).dataType(classOf[java.lang.Float]).cardinality(Cardinality.LIST).make()
-          }
-        case "double" =>
-          cardinality match {
-            case "single" => mgt.makePropertyKey(propertyKey).dataType(classOf[java.lang.Double]).cardinality(Cardinality.SINGLE).make()
-            case "set" => mgt.makePropertyKey(propertyKey).dataType(classOf[java.lang.Double]).cardinality(Cardinality.SET).make()
-            case "list" => mgt.makePropertyKey(propertyKey).dataType(classOf[java.lang.Double]).cardinality(Cardinality.LIST).make()
-          }
-        case "date" =>
-          cardinality match {
-            case "single" => mgt.makePropertyKey(propertyKey).dataType(classOf[java.util.Date]).cardinality(Cardinality.SINGLE).make()
-            case "set" => mgt.makePropertyKey(propertyKey).dataType(classOf[java.util.Date]).cardinality(Cardinality.SET).make()
-            case "list" => mgt.makePropertyKey(propertyKey).dataType(classOf[java.util.Date]).cardinality(Cardinality.LIST).make()
-          }
-        //        case "geoshape" =>
-        //          cardinality match {
-        //            case "single" => mgt.makePropertyKey(propertyKey).dataType(classOf[]).cardinality(Cardinality.SINGLE).make()
-        //            case "set" => mgt.makePropertyKey(propertyKey).dataType(classOf[]).cardinality(Cardinality.SET).make()
-        //            case "list" => mgt.makePropertyKey(propertyKey).dataType(classOf[]).cardinality(Cardinality.LIST).make()
-        //          }
-        case "uuid" =>
-          cardinality match {
-            case "single" => mgt.makePropertyKey(propertyKey).dataType(classOf[java.util.UUID]).cardinality(Cardinality.SINGLE).make()
-            case "set" => mgt.makePropertyKey(propertyKey).dataType(classOf[java.util.UUID]).cardinality(Cardinality.SET).make()
-            case "list" => mgt.makePropertyKey(propertyKey).dataType(classOf[java.util.UUID]).cardinality(Cardinality.LIST).make()
-          }
+      val pMake = propertyType match {
+
+        case "string" => mgt.makePropertyKey(propertyKey).dataType(classOf[String]).cardinality(proCardinality).make()
+
+        case "character" => mgt.makePropertyKey(propertyKey).dataType(classOf[Character]).cardinality(proCardinality).make()
+
+        case "boolean" => mgt.makePropertyKey(propertyKey).dataType(classOf[java.lang.Boolean]).cardinality(proCardinality).make()
+
+        case "byte" => mgt.makePropertyKey(propertyKey).dataType(classOf[java.lang.Byte]).cardinality(proCardinality).make()
+
+        case "short" => mgt.makePropertyKey(propertyKey).dataType(classOf[java.lang.Short]).cardinality(proCardinality).make()
+
+        case "integer" => mgt.makePropertyKey(propertyKey).dataType(classOf[java.lang.Integer]).cardinality(proCardinality).make()
+
+        case "long" => mgt.makePropertyKey(propertyKey).dataType(classOf[java.lang.Long]).cardinality(proCardinality).make()
+
+        case "float" => mgt.makePropertyKey(propertyKey).dataType(classOf[java.lang.Float]).cardinality(proCardinality).make()
+
+        case "double" => mgt.makePropertyKey(propertyKey).dataType(classOf[java.lang.Double]).cardinality(proCardinality).make()
+
+        case "date" => mgt.makePropertyKey(propertyKey).dataType(classOf[java.util.Date]).cardinality(proCardinality).make()
+
+        case "uuid" => mgt.makePropertyKey(propertyKey).dataType(classOf[java.util.UUID]).cardinality(proCardinality).make()
 
         case _ => null
       }
@@ -157,6 +110,14 @@ object SchemaGenerator {
 
     } else {
       None
+    }
+  }
+
+  private def getCardinality(cardinality: String): Cardinality = {
+    cardinality match {
+      case "single" => Cardinality.SINGLE
+      case "set" => Cardinality.SET
+      case "list" => Cardinality.LIST
     }
   }
 

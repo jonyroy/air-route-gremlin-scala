@@ -31,7 +31,11 @@ lazy val root = (project in file("."))
     libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.2.3" % Test,
 
     // https://mvnrepository.com/artifact/joda-time/joda-time
-    libraryDependencies += "joda-time" % "joda-time" % "2.10"
+    libraryDependencies += "joda-time" % "joda-time" % "2.10",
+
+    // https://mvnrepository.com/artifact/com.typesafe/config
+    libraryDependencies += "com.typesafe" % "config" % "1.3.3"
+
 
 
 

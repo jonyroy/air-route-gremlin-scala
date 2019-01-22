@@ -23,7 +23,7 @@ object Query {
 
   def getCountryGroupBy(scalaGraph: ScalaGraph) = {
 
-    scalaGraph.V().hasLabel("airport").groupCount().by("country").l()
+    scalaGraph.V().hasLabel("airport").groupCount(By(Key[String]("country"))).l()
   }
 
   def getNumberOfVertices(scalaGraph: ScalaGraph): Long = {
@@ -38,8 +38,6 @@ object Query {
   def getNameOfPerson(scalaGraph: ScalaGraph, id: Int) = {
     scalaGraph.V().hasLabel("person").has(Key[Int]("id"), id).value(Key[String]("firstName")).l()
   }
-
-
 
   def vertexCreationManager(scalaGraph: ScalaGraph) = {
 
