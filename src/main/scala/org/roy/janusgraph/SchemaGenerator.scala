@@ -1,5 +1,6 @@
 package org.roy.janusgraph
 
+import gremlin.scala.ScalaGraph
 import org.apache.tinkerpop.gremlin.structure.Vertex
 import org.janusgraph.core._
 import org.janusgraph.core.schema.JanusGraphManagement
@@ -40,6 +41,10 @@ object SchemaGenerator {
 
   }
 
+
+  def defineAirRouteSchema(scalaGraph: ScalaGraph) = {
+
+  }
 
 
   private def createVertexLabel(mgt: JanusGraphManagement, newVertexLabel: String): Option[VertexLabel] = {

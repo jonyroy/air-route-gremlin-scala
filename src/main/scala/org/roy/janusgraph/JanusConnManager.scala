@@ -15,7 +15,7 @@ object JanusConnManager {
     try {
       val graph: JanusGraph = JanusGraphFactory.build
         .set("storage.backend", "cql")
-        .set("storage.hostname", "127.0.0.1")
+        .set("storage.hostname", "127.0.0.1,192.168.0.104")
         .set("storage.port", "9042")
         .set("storage.cql.keyspace", "janusgraph")
         .open()

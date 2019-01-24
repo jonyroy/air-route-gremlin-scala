@@ -10,7 +10,9 @@ object TinkerGraphManager {
   def loadAirRouteToMemory(graph: ScalaGraph): Boolean = {
 
     try {
+      println(s"Graph Loading Starts......")
       graph.graph.io(IoCore.graphml()).readGraph("src/main/resources/air-routes-latest.graphml")
+      println(s"Graph Loading Ends.")
       true
     } catch {
       case e: Exception => false

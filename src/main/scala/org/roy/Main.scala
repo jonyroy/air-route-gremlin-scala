@@ -7,7 +7,7 @@ import org.roy.janusgraph.JanusConnManager._
 import org.roy.utils.Utils._
 import org.apache.tinkerpop.gremlin.structure.io
 import org.apache.tinkerpop.gremlin.structure.io.IoCore
-import org.roy.air.route.Query
+import org.roy.air.route.{GremlinTraversal, Query}
 import org.roy.janusgraph.SchemaGenerator
 import org.roy.tinkergraph.TinkerGraphManager
 import org.roy.utils.IsNotNull
@@ -20,25 +20,30 @@ object Main {
   def main(arg: Array[String]): Unit = {
 
 
-    //SchemaGenerator.genSchema
+    //SchemaGenerator.schemaManager
 
     val graph: JanusGraph = getJanusGraphInstance()
-//
-//    if (isGraphOpen(graph)) {
-//      println("Hoooree JanusGraph Instance Creation Successful.")
-//    } else {
-//      println("Sorry Can't create JanusGraph Instance. Try another time")
-//    }
+
 //
     val scalaGraph: ScalaGraph = getScalaGraphInstance(graph)
+
+    //TinkerGraphManager.loadAirRouteToMemory(scalaGraph)
+
+    //commitScalaGraphTx(scalaGraph)
+
+    println("Commit Ok")
+
+    val r = GremlinTraversal.repeatStep(scalaGraph)
+
+    println("Path" + r)
 
     //val pk = graph.getPropertyKey("id")
 
     //if(IsNotNull(pk)) println(pk)
 
-    println(Query.getNameOfPerson(scalaGraph, 100))
+    //println(Query.getNameOfPerson(scalaGraph, 100))
 
-    println(Query.getNumberOfVertices(scalaGraph))
+    //println(Query.getNumberOfVertices(scalaGraph))
 
     //Query.vertexCreationManager(scalaGraph)
 
