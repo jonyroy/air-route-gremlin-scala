@@ -2,6 +2,7 @@ package org.roy.air.route
 
 import gremlin.scala._
 import org.apache.tinkerpop.gremlin.process.traversal.Path
+import org.apache.tinkerpop.gremlin.structure.T
 
 object GremlinTraversal {
 
@@ -73,6 +74,41 @@ object GremlinTraversal {
 //    val a = StepLabel[java.util.Set[java.lang.Long]]()
 
   //  scalaGraph.V(5).sideEffect(_.out().count().store(a)).out().select(a).headOption()
+  }
+
+
+
+  /**
+    *
+    * @param scalaGraph
+    * @param sCode
+    */
+  def getMaxTwoStepsAirports(scalaGraph: ScalaGraph, sCode: String) = {
+
+    val a = StepLabel[Vertex]()
+    val b = StepLabel[String]()
+    val c = StepLabel[String]()
+
+    scalaGraph.V()
+      .has(Key[String]("code"), sCode)
+      .out("route")
+      .as(a)
+      .value(Key[String]("city"))
+      .as("x")
+      .select(a)
+      .out("route")
+      .value(Key[String]("city"))
+      .as("y")
+      .select("x", "y")
+      .l()
+
+  }
+
+  def countByGroup(scalaGraph: ScalaGraph, category: String) = {
+    import scala.collection.JavaConversions._
+    val x = new java.util.HashMap[java.lang.String, java.lang.Long]
+    scalaGraph.V().hasLabel("airport")
+      .groupCount(By(Key[String](category))).headOption().getOrElse(x).toMap
   }
 
 }

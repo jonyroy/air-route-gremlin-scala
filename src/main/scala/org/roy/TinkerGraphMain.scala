@@ -19,7 +19,11 @@ object TinkerGraphMain {
     //GremlinTraversal.getDhakaToOneLevel(scalaGraph).foreach(println _)
 
     //println("dfdf" + GremlinTraversal.getDist(scalaGraph))
-    GremlinTraversal.getPathBetweenTwoAirports(scalaGraph, "AUS", "AGR").foreach(println _)
+    //GremlinTraversal.getPathBetweenTwoAirports(scalaGraph, "AUS", "AGR").foreach(println _)
+
+    //GremlinTraversal.getMaxTwoStepsAirports(scalaGraph, "SPD").foreach(println _)
+
+    GremlinTraversal.countByGroup(scalaGraph, "country").foreach(println _)
     scalaGraph.close()
   }
 }
