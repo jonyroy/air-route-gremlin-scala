@@ -4,6 +4,8 @@ import gremlin.scala._
 import org.apache.tinkerpop.gremlin.process.traversal.Path
 import org.apache.tinkerpop.gremlin.structure.T
 
+import scala.collection.JavaConverters._
+
 object GremlinTraversal {
 
 
@@ -105,11 +107,45 @@ object GremlinTraversal {
   }
 
   def countByGroup(scalaGraph: ScalaGraph, category: String) = {
-    import scala.collection.JavaConversions._
+    
+    import scala.collection.JavaConverters._
     val x = new java.util.HashMap[java.lang.String, java.lang.Long]
-    scalaGraph.V().hasLabel("airport")
-      .groupCount(By(Key[String](category))).headOption().getOrElse(x).toMap
+    
+    scalaGraph.V()
+      .hasLabel("airport")
+      .groupCount(By(Key[String](category)))
+      .headOption()
+      .getOrElse(x)
+      .asScala
+      .toMap
   }
+
+
+
+  def getOneStopDstFromSrc(scalaGraph: ScalaGraph, srcCode: String) = {
+    scalaGraph.V()
+      .has("airport", Key[String]("code"), srcCode)
+      .out("route")
+      .values[String]("code")
+      .fold()
+      .head()
+      .asScala
+      .toList
+  }
+
+
+  def getNthStopDstFromSrc(scalaGraph: ScalaGraph, srcCode: String, nthStop: Int) = {
+
+    val nthStopMin: Int = Math.min(nthStop, 8)
+
+    scalaGraph.V()
+      .has("airport", Key[String]("code"), srcCode)
+      .repeat(_.out("route").dedup())
+      .times(nthStopMin)
+      .values[String]("code")
+      .l()
+  }
+
 
 }
 
